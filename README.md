@@ -36,9 +36,9 @@ Despite extensive computations, the conjectural layer is open. The hard obstruct
 
 Define the set of values reachable with exactly $t$ positive unit fractions:
 
-$$
+```
 \mathcal{E}_t \;=\; \left\{\, \sum_{i=1}^{t}\frac{1}{a_i} \;:\; a_i \in \mathbb{Z}_{>0} \,\right\}
-$$
+```
 
 (no distinctness requirement; repeats allowed). Then define the Egyptian compression length:
 
