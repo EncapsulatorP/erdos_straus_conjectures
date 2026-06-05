@@ -21,6 +21,65 @@ k/n = 1/a + 1/b + 1/c,   k ∈ {4, 5, 6, 7, ...}
 Despite being verified computationally for very large ranges, no proof exists. The obstruction concentrates on **Mordell hard residues** mod 840 — specifically n ≡ {1, 121, 169, 289, 361, 529} (mod 840), which are quadratic residues that resist easy decomposition.
 
 ---
+## 1. Core object: the unit-fraction length
+
+ Define the set of values reachable with exactly `t` positive unit fractions:
+
+$$
+\mathcal{E}_t \;=\; \left\{\, \sum_{i=1}^{t}\frac{1}{a_i} \;:\; a_i \in \mathbb{Z}_{>0} \,\right\}
+$$
+
+(no distinctness requirement; repeats allowed). Then define the **Egyptian compression length**:
+
+$$
+\boxed{\,L_{\mathrm{UF}}(x) \;=\; \min\{\, t : x \in \mathcal{E}_t \,\}\,}
+$$
+
+Every positive rational has a finite expansion, so $L_{\mathrm{UF}}$ is always defined and finite. The interesting object is therefore **not** infinity but the **bounded-length** question $L_{\mathrm{UF}}(x) \le t$.
+
+For completeness:
+
+$$
+\mathcal{E}_* \;=\; \bigcup_{t \ge 1}\mathcal{E}_t \qquad (\text{= all positive rationals, by finiteness of Egyptian expansions})
+$$
+
+---
+
+## 2. The conjectures, restated in one line each
+
+| Name | Compact form | Status |
+|---|---|---|
+| Erdős–Straus | $L_{\mathrm{UF}}(4/n) \le 3$ for all $n \ge 2$ | **open** |
+| Sierpiński | $L_{\mathrm{UF}}(5/n) \le 3$ for all $n \ge 2$ | **open** |
+| Schinzel (general) | $L_{\mathrm{UF}}(k/n) \le 3$ for all $n$ large enough (given $k$) | **open** |
+| 3-slot problem | $L_{\mathrm{UF}}(k/n) \le 3$ | family of hard Diophantine cases |
+
+Note the structural point: **the number of slots is fixed at 3.** What moves across these conjectures is the numerator $k$, not the slot count. So $4 = 3 + 1$ is *not* a moving identity $k = t+1$ — Sierpiński keeps $t = 3$ and takes $k = 5$.
+
+---
+
+## 3. Why $k = t+1$ is the threshold of first difficulty
+
+The intuition "$k = t+1$" is correct as the **first hard numerator** for a given slot count $t$, and this is exactly why $4/n$ (at $t=3$) is the canonical case.
+
+Fix $t$ slots. Any numerator $k \le t$ is **trivial**, because the unary default already fits:
+
+$$
+\frac{k}{n} \;=\; \underbrace{\frac1n + \frac1n + \cdots + \frac1n}_{k\text{ copies}} \;\in\; \mathcal{E}_k \subseteq \mathcal{E}_t \qquad (k \le t).
+$$
+
+So for $t = 3$:
+
+- $1/n,\ 2/n,\ 3/n$ are all trivial. In particular $3/n = 1/n + 1/n + 1/n$ uses exactly the 3 slots with nothing to spare.
+- $4/n$ is the **first numerator whose unary default overflows** — it wants 4 slots, only 3 are available. First case requiring genuine recombination, not just copying.
+
+Threshold pattern, and how the outcome depends on $t$:
+
+- $t = 2$: threshold $k = 3$ is already **false** — e.g. $3/7$ has no two-term unit-fraction representation.
+- $t = 3$: threshold $k = 4$ is **open** (conjecturally true) — Erdős–Straus.
+
+So $k = t+1$ is the first overflow at every $t$; what changes is whether it holds.
+
 
 ## Scripts
 

@@ -7,7 +7,7 @@
 
 ## 1. Core object: the unit-fraction length
 
-Stop writing the repeated sum. Define the set of values reachable with exactly `t` positive unit fractions:
+ Define the set of values reachable with exactly `t` positive unit fractions:
 
 $$
 \mathcal{E}_t \;=\; \left\{\, \sum_{i=1}^{t}\frac{1}{a_i} \;:\; a_i \in \mathbb{Z}_{>0} \,\right\}
@@ -57,7 +57,7 @@ So for $t = 3$:
 - $1/n,\ 2/n,\ 3/n$ are all trivial. In particular $3/n = 1/n + 1/n + 1/n$ uses exactly the 3 slots with nothing to spare.
 - $4/n$ is the **first numerator whose unary default overflows** — it wants 4 slots, only 3 are available. First case requiring genuine recombination, not just copying.
 
-Threshold pattern, and how the verdict depends on $t$:
+Threshold pattern, and how the outcome depends on $t$:
 
 - $t = 2$: threshold $k = 3$ is already **false** — e.g. $3/7$ has no two-term unit-fraction representation.
 - $t = 3$: threshold $k = 4$ is **open** (conjecturally true) — Erdős–Straus.
