@@ -148,14 +148,14 @@ This repository uses that as a two-channel diagnostic, not as a proof bridge.
 ### Quick reference
 
 $$
-\mathcal{E}_t=\Big\{\textstyle\sum_{i=1}^{t}1/a_i : a_i\in\mathbb{Z}_{>0}\Big\},\qquad
-L_{\mathrm{UF}}(x)=\min\{t:x\in\mathcal{E}_t\}
+\mathcal{E}_t=\left\{\sum_{i=1}^{t}\frac{1}{a_i}:a_i\in\mathbb{Z}_{>0}\right\},\qquad
+L_{\mathrm{UF}}(x)=\min\left\{t:x\in\mathcal{E}_t\right\}
 $$
 
 $$
-	extbf{ESC:}\ L_{\mathrm{UF}}(4/n)\le3\ \forall n\ge2
+\text{ESC:}\ L_{\mathrm{UF}}(4/n)\le3\ \forall n\ge2
 \qquad\qquad
-	extbf{General direction:}\ L_{\mathrm{UF}}(k/n)\le3
+\text{General direction:}\ L_{\mathrm{UF}}(k/n)\le3
 $$
 
 ---
