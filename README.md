@@ -1,6 +1,6 @@
-# ESC ML Scripts — Erdős–Straus Generalized Conjecture: ML Diagnostics
+# Erdős–Straus Conjecture: ML Diagnostics
 
-This repository contains two machine-learning diagnostic tools for studying the **Erdős–Straus Conjecture (ESC)** and its generalization, alongside a cross-domain experiment coupling ESC's multiplicative structure to Goldbach's additive structure.
+This repository contains two machine-learning diagnostic tools for studying the **Erdős–Straus Conjecture** and its generalization, alongside a cross-domain experiment coupling the conjecture's multiplicative structure to Goldbach's additive structure.
 
 ---
 
@@ -24,13 +24,13 @@ Despite being verified computationally for very large ranges, no proof exists. T
 
 ## Scripts
 
-### `esc_goldbach_split_ml.py` — Goldbach / ESC channel split diagnostic
+### `esc_goldbach_split_ml.py` — Goldbach / Erdős–Straus channel split diagnostic
 
-**Question**: Does the multiplicative structure of ESC inversion carry predictive signal for Goldbach partition counts, beyond what Hardy–Littlewood and Ramanujan additive features already provide?
+**Question**: Does the multiplicative structure of Erdős–Straus inversion carry predictive signal for Goldbach partition counts, beyond what Hardy–Littlewood and Ramanujan additive features already provide?
 
 For each even N in [4, N_max], it:
 1. Computes the Goldbach fiber: all prime pairs (p, q) with p + q = N
-2. Computes ESC inversion statistics over the prime fiber (for each prime p | fiber, runs the gate k/p = 1/(p·m) + ... up to m_limit)
+2. Computes Erdős–Straus inversion statistics over the prime fiber (for each prime p | fiber, runs the gate k/p = 1/(p·m) + ... up to m_limit)
 3. Trains two Random Forest regressors on the **residual** (actual count − Hardy–Littlewood estimate):
    - **Model A** — additive-only: Ramanujan sums c_q(N) for q ∈ {3,4,5,7,8,11,13,16,30,210,840}, modular residues, log features
    - **Model B** — additive + Erdős–Straus: Model A features plus Erdős–Straus inversion aggregates (first_m statistics, density, hard-residue rates, min-mod-gap)
@@ -88,9 +88,9 @@ python remainder_compression_ml.py --n-max 5000 --k-values 4 5 6 7 --m-limit 128
 
 ```
 esc_ml_scripts/
-├── esc_goldbach_split_ml.py       # Goldbach / ESC channel split experiment
+├── esc_goldbach_split_ml.py       # Goldbach / Erdős–Straus channel split experiment
 ├── remainder_compression_ml.py    # Egyptian-fraction compression gate experiment
-├── erdos_compression.pdf          # Background paper on ESC compression
+├── erdos_compression.pdf          # Background paper on Erdős–Straus compression
 ├── results_split/                 # Outputs from esc_goldbach_split_ml.py
 │   ├── goldbach_split_dataset.csv
 │   ├── goldbach_split_report.json
@@ -118,4 +118,4 @@ pip install numpy pandas scikit-learn
 
 ## Interpretation Caveat
 
-These are **diagnostic tools, not proof engines**. A positive result (ESC features improve held-out prediction) means the ESC channel leaks extra information about the Goldbach structure — it is a signal worth studying further. It is not evidence of a theoretical connection without additional analysis.
+These are **diagnostic tools, not proof engines**. A positive result (Erdős–Straus features improve held-out prediction) means the Erdős–Straus channel leaks extra information about the Goldbach structure — it is a signal worth studying further. It is not evidence of a theoretical connection without additional analysis.
