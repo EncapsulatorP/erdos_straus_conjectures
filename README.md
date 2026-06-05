@@ -50,9 +50,9 @@ Every positive rational has a finite expansion, so $L_{\mathrm{UF}}$ is always d
 
 For completeness:
 
-$$
+```
 \mathcal{E}_* \;=\; \bigcup_{t \ge 1}\mathcal{E}_t \qquad (\text{all positive rationals, by finiteness of Egyptian expansions})
-$$
+```
 
 ### 2. The conjectures, restated in one line each
 
