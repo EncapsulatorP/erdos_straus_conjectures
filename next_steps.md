@@ -22,9 +22,9 @@ Analyze:
 ### 2. Ablation: which ESC features drive the Goldbach improvement? **[compute]**
 
 Model B uses 10 ESC features. Run a subset ablation:
-- B1: additive + `esc_first_m_mean` only
-- B2: additive + density features (`esc_density_mean`, `esc_density_std`) only
-- B3: additive + hard-residue rate (`esc_pair_hard_any_rate`) only
+- B1: additive + `erdos_straus_first_m_mean` only
+- B2: additive + density features (`erdos_straus_density_mean`, `erdos_straus_density_std`) only
+- B3: additive + hard-residue rate (`erdos_straus_pair_hard_any_rate`) only
 
 This distinguishes whether the gain comes from the *scale* of the first solution (first_m), the *density* of solutions, or the *obstruction structure* (hard residues). The answer shapes whether to pursue deeper algebraic explanations.
 
@@ -35,26 +35,26 @@ This distinguishes whether the gain comes from the *scale* of the first solution
 ### 3. Scale Goldbach experiment to N = 100,000 **[compute]**
 
 The current run covers N ≤ 20,000. The ESC signal might strengthen (or collapse) at larger scales. Specifically:
-- `esc_first_m_mean` dominance: does it persist or decay as N grows?
+- `erdos_straus_first_m_mean` dominance: does it persist or decay as N grows?
 - Large-modulus features (N mod 840) had negative importance at N ≤ 20,000 but may become useful once the residue classes are better sampled (period 840 needs ~10× coverage to see structure clearly).
 
 ```
-python esc_goldbach_split_ml.py --n-max 100000 --esc-m 128 --outdir results_split_100k
+python erdos_straus_goldbach_split_ml.py --n-max 100000 --esc-m 128 --outdir results_split_100k
 ```
 
 Note: runtime will increase roughly linearly with N and with esc-m.
 
 ### 4. Investigate the first-m distribution over the prime fiber **[theory + compute]**
 
-`esc_first_m_mean` is the top feature. Concretely: for a prime p dividing the Goldbach fiber of N, what determines the smallest m such that the gate 4/p = 1/(p·m) + 1/b + 1/c has a solution?
+`erdos_straus_first_m_mean` is the top feature. Concretely: for a prime p dividing the Goldbach fiber of N, what determines the smallest m such that the gate 4/p = 1/(p·m) + 1/b + 1/c has a solution?
 
 The divisor identity gives: m must satisfy `(4m−1)² ≡ 1 (mod p)`, which reduces to `4m ≡ 0 or 2 (mod p)`. The first valid m is determined by arithmetic progressions mod p. A closed-form or tight bound on first_m(p) would explain why its mean over the fiber tracks the Goldbach residual.
 
 ### 5. Separate hard-residue primes from smooth primes in the fiber **[compute]**
 
-Currently `esc_pair_hard_any_rate` is a binary indicator (any hard prime in the pair). Refine it:
-- `esc_hard_prime_count` — count of primes in fiber with p mod 840 ∈ hard set
-- `esc_hard_prime_fraction` — fraction of fiber primes that are hard
+Currently `erdos_straus_pair_hard_any_rate` is a binary indicator (any hard prime in the pair). Refine it:
+- `erdos_straus_hard_prime_count` — count of primes in fiber with p mod 840 ∈ hard set
+- `erdos_straus_hard_prime_fraction` — fraction of fiber primes that are hard
 - Split first_m stats into hard-fiber and smooth-fiber components
 
 This may extract a cleaner signal from the hard-residue obstruction structure.
