@@ -36,9 +36,9 @@ Despite extensive computations, the conjectural layer is open. The hard obstruct
 
 Define the set of values reachable with exactly $t$ positive unit fractions:
 
-$$
+```
 \mathcal{E}_t \;=\; \left\{\, \sum_{i=1}^{t}\frac{1}{a_i} \;:\; a_i \in \mathbb{Z}_{>0} \,\right\}
-$$
+```
 
 (no distinctness requirement; repeats allowed). Then define the Egyptian compression length:
 
@@ -50,9 +50,9 @@ Every positive rational has a finite expansion, so $L_{\mathrm{UF}}$ is always d
 
 For completeness:
 
-$$
+```
 \mathcal{E}_* \;=\; \bigcup_{t \ge 1}\mathcal{E}_t \qquad (\text{all positive rationals, by finiteness of Egyptian expansions})
-$$
+```
 
 ### 2. The conjectures, restated in one line each
 
