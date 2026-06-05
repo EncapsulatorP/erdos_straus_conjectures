@@ -12,14 +12,14 @@ It builds one row per even N. The target is the actual Goldbach fiber count
 # {p <= q : p + q = N}. It compares two models:
 
     A) additive features only
-    B) additive + ESC inversion features aggregated over the prime fiber
+    B) additive + Erdős–Straus inversion features aggregated over the prime fiber
 
 This is NOT a proof engine. It is a leakage-controlled diagnostic: if B improves
 held-out prediction of the residual beyond Hardy-Littlewood/Ramanujan features,
-then the ESC channel is carrying extra signal worth studying.
+then the Erdős–Straus channel is carrying extra signal worth studying.
 
 Default run:
-    python esc_goldbach_split_ml.py --n-max 20000 --esc-m 64 --outdir results_split
+    python esc_goldbach_split_ml.py --n-max 20000 --es-m 64 --outdir results_split
 
 Outputs:
     results_split/goldbach_split_dataset.csv
@@ -191,10 +191,10 @@ def hl_goldbach_estimate(N: int) -> float:
     return max(0.0, TWIN_PRIME_C2_APPROX * correction * N / (logn * logn))
 
 
-# -------------------------- ESC inversion feature gate -------------------------
+# ----------------------- Erdős–Straus inversion feature gate -------------------
 
 @dataclass(frozen=True)
-class ESCStats:
+class ErdosStrausStats:
     first_m: int
     solved_count: int
     checked_m: int
@@ -203,10 +203,10 @@ class ESCStats:
     min_mod_gap: int
 
 
-class ESCInversionCache:
+class ErdosStrausInversionCache:
     """Restricted Egyptian inversion gate for k/n = 1/a + 1/b + 1/c with a = n*m.
 
-    For k=4 this is the Erdős-Straus channel. For a fixed m:
+    For k=4 this is the Erdős–Straus channel. For a fixed m:
 
         k/n - 1/(n*m) = (k*m - 1)/(n*m) = 1/b + 1/c.
 
@@ -222,9 +222,9 @@ class ESCInversionCache:
         self.m_limit = int(m_limit)
         self.spf = spf
         self.k = int(k)
-        self._cache: Dict[int, ESCStats] = {}
+        self._cache: Dict[int, ErdosStrausStats] = {}
 
-    def stats(self, n: int) -> ESCStats:
+    def stats(self, n: int) -> ErdosStrausStats:
         n = int(n)
         if n in self._cache:
             return self._cache[n]
@@ -249,7 +249,7 @@ class ESCInversionCache:
                 if first_m == 0:
                     first_m = m
         hard = int(n % 840 in MORDELL_HARD_RESIDUES_840)
-        stats = ESCStats(
+        stats = ErdosStrausStats(
             first_m=first_m,
             solved_count=solved_count,
             checked_m=self.m_limit,
@@ -265,13 +265,13 @@ class ESCInversionCache:
 
 def build_dataset(
     n_max: int,
-    esc_m: int,
+    es_m: int,
     ramanujan_q: Iterable[int] = DEFAULT_RAMANUJAN_Q,
     mods: Iterable[int] = DEFAULT_MODS,
 ) -> pd.DataFrame:
     is_prime = sieve_bool(n_max)
     spf = smallest_prime_factor(max(n_max, 2))
-    esc_cache = ESCInversionCache(m_limit=esc_m, spf=spf, k=4)
+    erdos_straus_cache = ErdosStrausInversionCache(m_limit=es_m, spf=spf, k=4)
     rows = []
 
     for N in range(4, n_max + 1, 2):
@@ -296,42 +296,42 @@ def build_dataset(
             row[f"ramanujan_c_{q}_norm"] = ramanujan_sum(N, q) / max(phi(q), 1)
 
         if count == 0:
-            esc_first = [0]
-            esc_density = [0.0]
-            esc_hard = [0]
-            esc_gap = [0]
+            erdos_straus_first = [0]
+            erdos_straus_density = [0.0]
+            erdos_straus_hard = [0]
+            erdos_straus_gap = [0]
             pair_density_product = [0.0]
             pair_hard_any = [0]
         else:
-            esc_first = []
-            esc_density = []
-            esc_hard = []
-            esc_gap = []
+            erdos_straus_first = []
+            erdos_straus_density = []
+            erdos_straus_hard = []
+            erdos_straus_gap = []
             pair_density_product = []
             pair_hard_any = []
             for p, q in pairs:
-                sp = esc_cache.stats(p)
-                sq = esc_cache.stats(q)
+                sp = erdos_straus_cache.stats(p)
+                sq = erdos_straus_cache.stats(q)
                 for s in (sp, sq):
-                    esc_first.append(s.first_m if s.first_m else esc_m + 1)
-                    esc_density.append(s.density)
-                    esc_hard.append(s.hard_residue_840)
-                    esc_gap.append(s.min_mod_gap)
+                    erdos_straus_first.append(s.first_m if s.first_m else es_m + 1)
+                    erdos_straus_density.append(s.density)
+                    erdos_straus_hard.append(s.hard_residue_840)
+                    erdos_straus_gap.append(s.min_mod_gap)
                 pair_density_product.append(sp.density * sq.density)
                 pair_hard_any.append(int(sp.hard_residue_840 or sq.hard_residue_840))
 
         row.update(
             {
-                "esc_first_m_mean": float(np.mean(esc_first)),
-                "esc_first_m_min": float(np.min(esc_first)),
-                "esc_first_m_max": float(np.max(esc_first)),
-                "esc_density_mean": float(np.mean(esc_density)),
-                "esc_density_std": float(np.std(esc_density)),
-                "esc_unsolved_rate": float(np.mean([x == esc_m + 1 for x in esc_first])),
-                "esc_hard_residue_rate": float(np.mean(esc_hard)),
-                "esc_min_mod_gap_mean": float(np.mean(esc_gap)),
-                "esc_pair_density_product_mean": float(np.mean(pair_density_product)),
-                "esc_pair_hard_any_rate": float(np.mean(pair_hard_any)),
+                "erdos_straus_first_m_mean": float(np.mean(erdos_straus_first)),
+                "erdos_straus_first_m_min": float(np.min(erdos_straus_first)),
+                "erdos_straus_first_m_max": float(np.max(erdos_straus_first)),
+                "erdos_straus_density_mean": float(np.mean(erdos_straus_density)),
+                "erdos_straus_density_std": float(np.std(erdos_straus_density)),
+                "erdos_straus_unsolved_rate": float(np.mean([x == es_m + 1 for x in erdos_straus_first])),
+                "erdos_straus_hard_residue_rate": float(np.mean(erdos_straus_hard)),
+                "erdos_straus_min_mod_gap_mean": float(np.mean(erdos_straus_gap)),
+                "erdos_straus_pair_density_product_mean": float(np.mean(pair_density_product)),
+                "erdos_straus_pair_hard_any_rate": float(np.mean(pair_hard_any)),
             }
         )
         rows.append(row)
@@ -349,8 +349,8 @@ def evaluate_models(df: pd.DataFrame, outdir: str, target: str = "target_residua
         or c.startswith("ramanujan_")
         or c in ["logN", "sqrtN", "hl_estimate", "log_hl_estimate"]
     ]
-    esc_cols = [c for c in df.columns if c.startswith("esc_")]
-    all_cols = additive_cols + esc_cols
+    erdos_straus_cols = [c for c in df.columns if c.startswith("erdos_straus_")]
+    all_cols = additive_cols + erdos_straus_cols
 
     # Leakage-controlled chronological split: train on small N, test on larger N.
     df = df.sort_values("N").reset_index(drop=True)
@@ -381,7 +381,7 @@ def evaluate_models(df: pd.DataFrame, outdir: str, target: str = "target_residua
         }, pred
 
     additive_model, additive_metrics, pred_add = fit_eval(additive_cols, "additive_only")
-    all_model, all_metrics, pred_all = fit_eval(all_cols, "additive_plus_ESC")
+    all_model, all_metrics, pred_all = fit_eval(all_cols, "additive_plus_ErdosStraus")
 
     # Permutation importance for the all model on a manageable test matrix.
     importance = permutation_importance(
@@ -403,7 +403,7 @@ def evaluate_models(df: pd.DataFrame, outdir: str, target: str = "target_residua
 
     pred_df = test[["N", "goldbach_count", "hl_estimate", "target_log_count", "target_residual"]].copy()
     pred_df["pred_additive"] = pred_add
-    pred_df["pred_additive_plus_ESC"] = pred_all
+    pred_df["pred_additive_plus_ErdosStraus"] = pred_all
     pred_df.to_csv(os.path.join(outdir, "holdout_predictions.csv"), index=False)
 
     report = {
@@ -412,11 +412,11 @@ def evaluate_models(df: pd.DataFrame, outdir: str, target: str = "target_residua
         "train_N_range": [int(train.N.min()), int(train.N.max())],
         "test_N_range": [int(test.N.min()), int(test.N.max())],
         "additive_only": additive_metrics,
-        "additive_plus_ESC": all_metrics,
+        "additive_plus_ErdosStraus": all_metrics,
         "delta_rmse_all_minus_additive": float(all_metrics["rmse"] - additive_metrics["rmse"]),
         "delta_mae_all_minus_additive": float(all_metrics["mae"] - additive_metrics["mae"]),
         "interpretation": (
-            "Negative deltas mean the ESC inversion channel improved held-out prediction. "
+            "Negative deltas mean the Erdős–Straus inversion channel improved held-out prediction. "
             "Positive deltas mean it did not help under this feature/limit/split."
         ),
         "top_features": imp_df.head(25).to_dict(orient="records"),
@@ -431,7 +431,7 @@ def evaluate_models(df: pd.DataFrame, outdir: str, target: str = "target_residua
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--n-max", type=int, default=20000, help="Maximum even N to scan.")
-    parser.add_argument("--esc-m", type=int, default=64, help="Max m in a=n*m ESC inversion gate.")
+    parser.add_argument("--es-m", type=int, default=64, help="Max m in a=n*m Erdős–Straus inversion gate.")
     parser.add_argument("--outdir", type=str, default="results_split")
     parser.add_argument(
         "--target",
@@ -443,7 +443,7 @@ def main() -> None:
     args = parser.parse_args()
 
     os.makedirs(args.outdir, exist_ok=True)
-    df = build_dataset(n_max=args.n_max, esc_m=args.esc_m)
+    df = build_dataset(n_max=args.n_max, es_m=args.es_m)
     dataset_path = os.path.join(args.outdir, "goldbach_split_dataset.csv")
     df.to_csv(dataset_path, index=False)
     report = evaluate_models(df, outdir=args.outdir, target=args.target)

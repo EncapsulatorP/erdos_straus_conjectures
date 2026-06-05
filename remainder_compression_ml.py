@@ -457,7 +457,7 @@ def main() -> None:
     parser.add_argument("--k-values", type=int, nargs="+", default=[4, 5, 6, 7])
     parser.add_argument("--slots", type=int, default=3)
     parser.add_argument("--m-limit", type=int, default=128)
-    parser.add_argument("--primes-only", action="store_true", help="Restrict n to primes, useful for ESC-style reductions.")
+    parser.add_argument("--primes-only", action="store_true", help="Restrict n to primes, useful for Erdős–Straus-style reductions.")
     parser.add_argument("--outdir", type=str, default="results_remainder")
     args = parser.parse_args()
 

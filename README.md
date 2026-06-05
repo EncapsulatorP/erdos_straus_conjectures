@@ -33,13 +33,13 @@ For each even N in [4, N_max], it:
 2. Computes ESC inversion statistics over the prime fiber (for each prime p | fiber, runs the gate k/p = 1/(p·m) + ... up to m_limit)
 3. Trains two Random Forest regressors on the **residual** (actual count − Hardy–Littlewood estimate):
    - **Model A** — additive-only: Ramanujan sums c_q(N) for q ∈ {3,4,5,7,8,11,13,16,30,210,840}, modular residues, log features
-   - **Model B** — additive + ESC: Model A features plus ESC inversion aggregates (first_m statistics, density, hard-residue rates, min-mod-gap)
+   - **Model B** — additive + Erdős–Straus: Model A features plus Erdős–Straus inversion aggregates (first_m statistics, density, hard-residue rates, min-mod-gap)
 
-Negative Δ(RMSE, MAE) means Model B outperforms Model A — ESC is carrying extra signal.
+Negative Δ(RMSE, MAE) means Model B outperforms Model A — the Erdős–Straus channel is carrying extra signal.
 
 **Run:**
 ```
-python esc_goldbach_split_ml.py --n-max 20000 --esc-m 64 --outdir results_split
+python esc_goldbach_split_ml.py --n-max 20000 --es-m 64 --outdir results_split
 ```
 
 **Outputs:**
