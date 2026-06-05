@@ -46,7 +46,7 @@ $$
 \boxed{\,L_{\mathrm{UF}}(x) \;=\; \min\{\, t : x \in \mathcal{E}_t \,\}\,}
 $$
 
-Every positive rational has a finite expansion, so $L_{\mathrm{UF}}$ is always defined and finite. The interesting object is therefore not infinity but the bounded-length question $L_{\mathrm{UF}}(x) \le t$.
+Every positive rational has a finite expansion, so $L_{\mathrm{UF}}$ is always defined and finite. The interesting object is therefore not infinity but the bounded-length question $L_{\mathrm{UF}}(x) \le 3$.
 
 For completeness:
 
@@ -131,7 +131,7 @@ These are square classes modulo $840$, which explains why simple modular coverag
 
 ### 7. Goldbach diagnostic use
 
-Applying ESC directly at even $N=p+q$ is weak because parity gives trivial closures. The informative test is on prime fibers: compute an inversion obstruction score on $p,q$ (or shifted forms), then compare that multiplicative channel against additive Hardy-Littlewood/Ramanujan baselines.
+Applying ESC directly at even $N=p+q$ is weak because parity gives trivial closures. The informative test is on prime fibers: compute an inversion obstruction score on $p,q$ (or shifted forms), then compare it against additive predictors.
 
 This repository uses that as a two-channel diagnostic, not as a proof bridge.
 
@@ -149,7 +149,7 @@ This repository uses that as a two-channel diagnostic, not as a proof bridge.
 
 $$
 \mathcal{E}_t=\left\{\sum_{i=1}^{t}\frac{1}{a_i}:a_i\in\mathbb{Z}_{>0}\right\},\qquad
-L_{\mathrm{UF}}(x)=\min\left\{t:x\in\mathcal{E}_t\right\}
+L_{\mathrm{UF}}(x)=\min\{t:x\in\mathcal{E}_t\}
 $$
 
 $$
@@ -164,16 +164,16 @@ $$
 
 ### `esc_goldbach_split_ml.py` — Goldbach / Erdős–Straus channel split diagnostic
 
-**Question**: Does the multiplicative structure of Erdős–Straus inversion carry predictive signal for Goldbach partition counts, beyond what Hardy–Littlewood and Ramanujan additive features already provide?
+**Question**: Does the multiplicative structure of Erdős–Straus inversion carry predictive signal for Goldbach partition counts, beyond what Hardy–Littlewood and Ramanujan additive features already explain?
 
-For each even N in [4, N_max], it:
-1. Computes the Goldbach fiber: all prime pairs (p, q) with p + q = N
-2. Computes Erdős–Straus inversion statistics over the prime fiber (for each prime p | fiber, runs the gate k/p = 1/(p·m) + ... up to m_limit)
+For each even $N$ in $[4, N_{\max}]$, it:
+1. Computes the Goldbach fiber: all prime pairs $(p, q)$ with $p + q = N$
+2. Computes Erdős–Straus inversion statistics over the prime fiber (for each prime $p$ in the fiber, runs the gate $k/p = 1/(p\cdot m) + \dots$ up to `m_limit`)
 3. Trains two Random Forest regressors on the **residual** (actual count − Hardy–Littlewood estimate):
-   - **Model A** — additive-only: Ramanujan sums c_q(N) for q ∈ {3,4,5,7,8,11,13,16,30,210,840}, modular residues, log features
-   - **Model B** — additive + Erdős–Straus: Model A features plus Erdős–Straus inversion aggregates (first_m statistics, density, hard-residue rates, min-mod-gap)
+   - **Model A** — additive-only: Ramanujan sums $c_q(N)$ for $q \in \{3,4,5,7,8,11,13,16,30,210,840\}$, modular residues, log features
+   - **Model B** — additive + Erdős–Straus: Model A features plus Erdős–Straus inversion aggregates (`first_m` statistics, density, hard-residue rates, min-mod-gap)
 
-Negative Δ(RMSE, MAE) means Model B outperforms Model A — the Erdős–Straus channel is carrying extra signal.
+Negative $\Delta(\mathrm{RMSE}, \mathrm{MAE})$ means Model B outperforms Model A — the Erdős–Straus channel is carrying extra signal.
 
 **Run:**
 ```
@@ -181,7 +181,7 @@ python esc_goldbach_split_ml.py --n-max 20000 --es-m 64 --outdir results_split
 ```
 
 **Outputs:**
-- `results_split/goldbach_split_dataset.csv` — one row per even N, all 58 features
+- `results_split/goldbach_split_dataset.csv` — one row per even $N$, all 58 features
 - `results_split/goldbach_split_report.json` — held-out metrics and top feature importances
 - `results_split/feature_importance_all.csv` — full ranked feature importance table
 - `results_split/holdout_predictions.csv` — test-set predictions
@@ -190,25 +190,25 @@ python esc_goldbach_split_ml.py --n-max 20000 --es-m 64 --outdir results_split
 
 ### `remainder_compression_ml.py` — Egyptian-fraction 3-term compression gate
 
-**Question**: For the generalized numerator overflow (k > 3 slots), which (k, n) pairs can be compressed to exactly 3 unit fractions via the restricted gate?
+**Question**: For the generalized numerator overflow ($k > 3$ slots), which $(k, n)$ pairs can be compressed to exactly 3 unit fractions via the restricted gate?
 
-**Gate definition**: For each pair (k, n), search m ≤ m_limit such that:
+**Gate definition**: For each pair $(k, n)$, search $m \le m_{\text{limit}}$ such that:
 
 ```
 k/n = 1/(n·m) + 1/b + 1/c
 ```
 
-This uses the divisor identity: let A = k·m − 1, B = n·m. Then:
+This uses the divisor identity: let $A = k\cdot m - 1$, $B = n\cdot m$. Then:
 
 ```
 (A·b − B)(A·c − B) = B²
 ```
 
-A 3-term solution exists iff B² has a factorization consistent with positive integer b, c. The gate is intentionally restricted (first denominator fixed to n·m) to give a clean, reproducible obstruction structure comparable across k values.
+A 3-term solution exists iff $B^2$ has a factorization consistent with positive integer $b, c$. The gate is intentionally restricted (first denominator fixed to $n\cdot m$) to give a clean, reproducible obstruction score.
 
-For each (k, n) with k ∈ {4,5,6,7} and n ≤ N_max, it trains:
+For each $(k, n)$ with $k \in \{4,5,6,7\}$ and $n \le N_{\max}$, it trains:
 - **Classifier**: `solved_within_gate` — binary, was a solution found?
-- **Regressor**: `log_first_m` — magnitude of the smallest successful m
+- **Regressor**: `log_first_m` — magnitude of the smallest successful $m$
 
 **Run:**
 ```
@@ -216,7 +216,7 @@ python remainder_compression_ml.py --n-max 5000 --k-values 4 5 6 7 --m-limit 128
 ```
 
 **Outputs:**
-- `results_remainder/remainder_dataset.csv` — one row per (k, n) pair
+- `results_remainder/remainder_dataset.csv` — one row per $(k, n)$ pair
 - `results_remainder/remainder_report.json` — classifier and regressor metrics
 - `results_remainder/feature_importance_classifier.csv` — feature importances for the classifier
 
@@ -256,4 +256,4 @@ pip install numpy pandas scikit-learn
 
 ## Interpretation Caveat
 
-These are **diagnostic tools, not proof engines**. A positive result (Erdős–Straus features improve held-out prediction) means the Erdős–Straus channel leaks extra information about the Goldbach structure — it is a signal worth studying further. It is not evidence of a theoretical connection without additional analysis.
+These are **diagnostic tools, not proof engines**. A positive result (Erdős–Straus features improve held-out prediction) means the Erdős–Straus channel leaks extra information about the Goldbach structure under the chosen featureization. It does **not** establish implication in either direction.
