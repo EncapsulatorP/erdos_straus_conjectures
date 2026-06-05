@@ -1,0 +1,156 @@
+{
+  "target": "target_residual",
+  "n_rows": 9999,
+  "train_N_range": [
+    4,
+    15000
+  ],
+  "test_N_range": [
+    15002,
+    20000
+  ],
+  "additive_only": {
+    "name": "additive_only",
+    "n_features": 48,
+    "mae": 0.05188708955396087,
+    "rmse": 0.07611828941233591,
+    "r2": -1.5242330391586387
+  },
+  "additive_plus_ESC": {
+    "name": "additive_plus_ESC",
+    "n_features": 58,
+    "mae": 0.04426250367227718,
+    "rmse": 0.0659565412040379,
+    "r2": -0.8952528257950234
+  },
+  "delta_rmse_all_minus_additive": -0.010161748208298002,
+  "delta_mae_all_minus_additive": -0.0076245858816836876,
+  "interpretation": "Negative deltas mean the ESC inversion channel improved held-out prediction. Positive deltas mean it did not help under this feature/limit/split.",
+  "top_features": [
+    {
+      "feature": "esc_first_m_mean",
+      "importance_mean": 0.011068594046056182,
+      "importance_std": 0.0004553596021396988
+    },
+    {
+      "feature": "hl_estimate",
+      "importance_mean": 0.00788784831713732,
+      "importance_std": 0.00023466834455268133
+    },
+    {
+      "feature": "log_hl_estimate",
+      "importance_mean": 0.006263489636251836,
+      "importance_std": 0.00012958679803432883
+    },
+    {
+      "feature": "esc_density_std",
+      "importance_mean": 0.002341613756705961,
+      "importance_std": 0.00010533435951327168
+    },
+    {
+      "feature": "ramanujan_c_30_norm",
+      "importance_mean": 0.0010566087766362743,
+      "importance_std": 0.0001973177151731375
+    },
+    {
+      "feature": "esc_first_m_max",
+      "importance_mean": 0.0009442638267624856,
+      "importance_std": 0.0001083664850903508
+    },
+    {
+      "feature": "esc_pair_hard_any_rate",
+      "importance_mean": 0.0008745376386411022,
+      "importance_std": 8.37994268420827e-05
+    },
+    {
+      "feature": "esc_density_mean",
+      "importance_mean": 0.0008052576248094625,
+      "importance_std": 4.898723569476234e-05
+    },
+    {
+      "feature": "ramanujan_c_5_norm",
+      "importance_mean": 0.0003777526174376077,
+      "importance_std": 1.892577809900421e-05
+    },
+    {
+      "feature": "esc_first_m_min",
+      "importance_mean": 0.00035191716127159583,
+      "importance_std": 4.2713188026563736e-05
+    },
+    {
+      "feature": "ramanujan_c_30",
+      "importance_mean": 0.00022922241249044342,
+      "importance_std": 7.584696344704756e-05
+    },
+    {
+      "feature": "N_mod_5_scaled",
+      "importance_mean": 0.0002051605935987355,
+      "importance_std": 4.2911187673190536e-05
+    },
+    {
+      "feature": "N_mod_30",
+      "importance_mean": 0.00019170959728954476,
+      "importance_std": 4.398049652228113e-05
+    },
+    {
+      "feature": "esc_min_mod_gap_mean",
+      "importance_mean": 0.0001902022361087649,
+      "importance_std": 1.0809650373413884e-05
+    },
+    {
+      "feature": "ramanujan_c_8_norm",
+      "importance_mean": 0.00017555567770051692,
+      "importance_std": 0.00011973953158535055
+    },
+    {
+      "feature": "N_mod_5",
+      "importance_mean": 0.00017373170218472114,
+      "importance_std": 8.761607991530472e-05
+    },
+    {
+      "feature": "ramanujan_c_8",
+      "importance_mean": 0.00016363200692345176,
+      "importance_std": 7.339267292814488e-05
+    },
+    {
+      "feature": "ramanujan_c_5",
+      "importance_mean": 0.0001399100346594559,
+      "importance_std": 5.5912862609248734e-06
+    },
+    {
+      "feature": "ramanujan_c_210",
+      "importance_mean": 8.100259764710442e-05,
+      "importance_std": 7.705065494389505e-06
+    },
+    {
+      "feature": "ramanujan_c_7",
+      "importance_mean": 7.946649496513858e-05,
+      "importance_std": 6.220265318264844e-06
+    },
+    {
+      "feature": "N_mod_11",
+      "importance_mean": 5.814632580223439e-05,
+      "importance_std": 7.893120781032998e-06
+    },
+    {
+      "feature": "N_mod_4_scaled",
+      "importance_mean": 5.812903199008124e-05,
+      "importance_std": 2.7039151315282817e-05
+    },
+    {
+      "feature": "N_mod_7_scaled",
+      "importance_mean": 4.765544008809621e-05,
+      "importance_std": 2.5950773570463458e-05
+    },
+    {
+      "feature": "N_mod_210_scaled",
+      "importance_mean": 4.4638531172156805e-05,
+      "importance_std": 8.527090501850536e-06
+    },
+    {
+      "feature": "N_mod_4",
+      "importance_mean": 2.0047188293612073e-05,
+      "importance_std": 7.159384422575676e-06
+    }
+  ]
+}

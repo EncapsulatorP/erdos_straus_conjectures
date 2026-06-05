@@ -1,0 +1,184 @@
+{
+  "n_rows": 19996,
+  "train_n_max": 3751,
+  "test_n_min": 3752,
+  "feature_count": 72,
+  "classifier": {
+    "accuracy": 1.0,
+    "balanced_accuracy": 1.0,
+    "roc_auc": null,
+    "average_precision": null
+  },
+  "regressor_log_first_m": {
+    "mae": 0.04569413134203082,
+    "rmse": 0.14762839040776463,
+    "r2": 0.7457740268547288,
+    "note": "Regression is only over rows solved within the gate."
+  },
+  "summary_by_k": [
+    {
+      "k": 4,
+      "rows": 4999,
+      "solved_rate": 1.0,
+      "mean_first_m": 1.2076415283056612,
+      "median_first_m": 1.0,
+      "mean_density": 0.32264577915583115,
+      "hard_residue_rate": 0.007001400280056011
+    },
+    {
+      "k": 5,
+      "rows": 4999,
+      "solved_rate": 0.9997999599919984,
+      "mean_first_m": 1.2618523704740947,
+      "median_first_m": 1.0,
+      "mean_density": 0.32035313312662533,
+      "hard_residue_rate": 0.007001400280056011
+    },
+    {
+      "k": 6,
+      "rows": 4999,
+      "solved_rate": 0.9977995599119824,
+      "mean_first_m": 2.013602720544109,
+      "median_first_m": 1.0,
+      "mean_density": 0.23753031856371273,
+      "hard_residue_rate": 0.007001400280056011
+    },
+    {
+      "k": 7,
+      "rows": 4999,
+      "solved_rate": 0.9981996399279855,
+      "mean_first_m": 1.7273454690938188,
+      "median_first_m": 1.0,
+      "mean_density": 0.2630244798959792,
+      "hard_residue_rate": 0.007001400280056011
+    }
+  ],
+  "top_classifier_features": [
+    {
+      "feature": "k",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "slots",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "overflow",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "positive_overflow",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "overflow_ratio",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "is_prime_n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "gcd_k_n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "log_n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "sqrt_n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "phi_over_n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "omega_n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "big_omega_n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "tau_n",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "mordell_hard_residue_840",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "square_class_mod_840",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "min_mod_gap",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "n_mod_3",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "n_mod_3_scaled",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "k_mod_3",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "n_mod_4",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "n_mod_4_scaled",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "k_mod_4",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "n_mod_5",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "n_mod_5_scaled",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    }
+  ],
+  "interpretation": "solved_within_gate=0 means no solution was found under the restricted a=n*m gate up to m_limit; it is a computational obstruction/censoring label, not a proof of nonexistence."
+}
