@@ -16,7 +16,7 @@
 | B — Additive + Erdős–Straus | 58 | 0.0443 | 0.0660 | −0.895 |
 | **Improvement (B − A)** | +10 Erdős–Straus features | **−0.0076** | **−0.0102** | **+0.629** |
 
-Both R² values are negative, which is expected: the Hardy–Littlewood residual is nearly mean-zero white noise, making it harder to predict than the raw count. The key result is the **delta**: Model B reduces RMSE by 10.2 points and MAE by 7.6 points on the held-out range, indicating the ESC inversion channel carries genuine extra signal.
+Both R² values are negative, which is expected: the Hardy–Littlewood residual is nearly mean-zero white noise, making it harder to predict than the raw count. The key result is the **delta**: Model B reduces RMSE by 10.2 points and MAE by 7.6 points on the held-out range, indicating the Erdős–Straus inversion channel carries genuine extra signal.
 
 ### Top Features by Permutation Importance
 
@@ -35,9 +35,9 @@ Both R² values are negative, which is expected: the Hardy–Littlewood residual
 
 ### Key Observations
 
-**`erdos_straus_first_m_mean` is the single strongest predictor**, ranking above the Hardy–Littlewood estimate itself. This feature aggregates, for each prime p in the Goldbach fiber of N, the smallest m for which the gate k/p = 1/(p·m) + ... succeeds. Its dominance suggests that the "difficulty" of the ESC inversion over the prime fiber tracks the deviation of Goldbach counts from the Hardy–Littlewood prediction.
+**`erdos_straus_first_m_mean` is the single strongest predictor**, ranking above the Hardy–Littlewood estimate itself. This feature aggregates, for each prime p in the Goldbach fiber of N, the smallest m for which the gate k/p = 1/(p·m) + ... succeeds. Its dominance suggests that the "difficulty" of the Erdős–Straus inversion over the prime fiber tracks the deviation of Goldbach counts from the Hardy–Littlewood prediction.
 
-**ESC density features (`erdos_straus_density_std`, `erdos_straus_density_mean`) outperform most Ramanujan terms.** The density measures how many m-values in [1, m_limit] solve the gate — a proxy for how "solvable" the multiplicative structure around N is. Variance of density across the fiber (`erdos_straus_density_std`) ranks 4th overall.
+**Erdős–Straus density features (`erdos_straus_density_std`, `erdos_straus_density_mean`) outperform most Ramanujan terms.** The density measures how many m-values in [1, m_limit] solve the gate — a proxy for how "solvable" the multiplicative structure around N is. Variance of density across the fiber (`erdos_straus_density_std`) ranks 4th overall.
 
 **`erdos_straus_pair_hard_any_rate`** measures the fraction of prime pairs in the Goldbach fiber where at least one prime falls in a Mordell hard residue class mod 840. Its presence in the top 10 confirms that the hard-residue obstruction structure has measurable impact on Goldbach counts beyond what smooth modular arithmetic captures.
 
